@@ -102,6 +102,7 @@ def allScrap():
 
         except IndexError:
             pass
+    driver.quit()
     return matches
 
 
