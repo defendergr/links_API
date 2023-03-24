@@ -1,5 +1,5 @@
 from Api import app
-
+from Api.apps import allScrap
 
 @app.get('/')
 def home():
@@ -8,5 +8,5 @@ def home():
 
 @app.get('/links')
 def get_links():
-    gameList = 'test'
+    gameList = allScrap()
     return gameList
