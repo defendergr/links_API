@@ -88,7 +88,7 @@ def allScrap():
                             finalLink = rmid.replace('\n', '')
                             singleMatchLinks.append(finalLink)
                             # print(finalLink)
-                    commaSepList = ',\n '.join(singleMatchLinks)
+                    commaSepList = ',\n'.join(singleMatchLinks)
                     match['Match'] = fixture
                     match['Link'] = commaSepList
                     if len(singleMatchLinks) > 0:
