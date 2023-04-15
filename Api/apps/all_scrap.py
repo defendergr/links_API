@@ -25,8 +25,8 @@ def allScrap():
             ele[acord].click()
 
     soup = BeautifulSoup(driver.page_source, 'html.parser')
-
-    links = soup.find_all('div', {'class': re.compile('e_40')})
+    # print(soup)
+    links = soup.find_all('div', {'class': re.compile('e_4')})
     # print(*links, sep='\n')
 
     testList = []
@@ -107,4 +107,4 @@ def allScrap():
 
 
 # allScrap()
-# print(*allScrap(), sep='\n')
+print(*allScrap(), sep='\n')
