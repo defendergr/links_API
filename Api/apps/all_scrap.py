@@ -18,7 +18,7 @@ def allScrap():
     service = Service(GeckoDriverManager().install())
     driver = webdriver.Firefox(service=service, options=options)
 
-    driver.get(url='https://widget.streamsthunder.tv/?d=1&s=1&sp=1&ft=01&fs=16px&fw=700&tt=none&fc=333333&tc=333333&bc=E5E4E2&bhc=E5E4E2&thc=333333&pd=18px&br=1px&brc=434342&brr=15px&mr=1px&tm=333333&tmb=FFFFFF&wb=E5E4E2&bcc=E5E4E2&bsh=0px&sm=2&rdb=EBEBEB&rdc=333333&lk=1&fk=0')
+    driver.get(url='https://widget.streamsthunder.tv/?d=1&s=1&sp=1,2&fs=12px&tt=none&fc=333333&tc=333333&bc=FFFFFF&bhc=F3F3F3&thc=333333&pd=5px&brc=CCCCCC&brr=2px&mr=1px&tm=333333&tmb=FFFFFF&wb=EBEBEB&bcc=FFFFFF&bsh=0px&sm=1&rdb=EBEBEB&rdc=333333&lk=1&fk=0%22%20width=%22100%%22%20height=%22800%22%20scrolling=%22auto%22%20align=%22top%22%20frameborder=%220%22')
     ele = driver.find_elements(By.TAG_NAME, 'h2')
     for acord in range(0, len(ele)):
         if ele[acord].is_displayed():
@@ -75,6 +75,18 @@ def allScrap():
                         elif 'https://daddylivehd.com' in link:
                             pass
                         elif 'https://lato.sx' in link:
+                            pass
+                        elif 'https://brolel.net' in link:
+                            pass
+                        elif 'https://fifaworldcup.icu' in link:
+                            pass
+                        elif 'https://streamhd247.online' in link:
+                            pass
+                        elif 'https://worldstreams.click' in link:
+                            pass
+                        elif 'https://wizospor.monster' in link:
+                            pass
+                        elif 'https://ustream.pro' in link:
                             pass
                         else:
                             ln = link.replace(
