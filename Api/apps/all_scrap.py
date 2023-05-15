@@ -57,7 +57,10 @@ def allScrap():
                 try:
                     # print(i['fixture'][0])
                     text = i['fixture'][0]
-                    fixture = text.replace('Free Live Streaming Football', '').strip().split('/')[0]
+                    if 'Free Live Streaming Football' in text:
+                        fixture = text.replace('Free Live Streaming Football', '').strip().split('/')[0]
+                    if 'Free Live Streaming Basketball' in text:
+                        fixture = text.replace('Free Live Streaming Basketball', '').strip().split('/')[0]
                     matchLinks = list(i['links'])
                     singleMatchLinks = []
                     for link in matchLinks:
