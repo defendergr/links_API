@@ -18,15 +18,15 @@ def allScrap():
     service = Service(GeckoDriverManager().install())
     driver = webdriver.Firefox(service=service, options=options)
 
-    driver.get(url='https://widget.streamsthunder.tv/?d=1&s=1&sp=1,2&fs=12px&tt=none&fc=333333&tc=333333&bc=FFFFFF&bhc=F3F3F3&thc=333333&pd=5px&brc=CCCCCC&brr=2px&mr=1px&tm=333333&tmb=FFFFFF&wb=EBEBEB&bcc=FFFFFF&bsh=0px&sm=1&rdb=EBEBEB&rdc=333333&lk=1&fk=0')
+    driver.get(url='https://widget.streamsthunder.tv/?d=1&s=1&sp=1,2&fs=12px&tt=none&fc=333333&tc=333333&bc=FFFFFF&bhc=F3F3F3&thc=333333&pd=5px&brc=CCCCCC&brr=2px&mr=1px&tm=333333&tmb=FFFFFF&wb=EBEBEB&bcc=FFFFFF&bsh=0px&sm=1&rdb=EBEBEB&rdc=333333&lk=1&fk=0%22%20width=%22100%%22%20height=%22800%22%20scrolling=%22auto%22%20align=%22top%22%20frameborder=%220%22')
     ele = driver.find_elements(By.TAG_NAME, 'h2')
     for acord in range(0, len(ele)):
         if ele[acord].is_displayed():
             ele[acord].click()
 
     soup = BeautifulSoup(driver.page_source, 'html.parser')
-
-    links = soup.find_all('div', {'class': re.compile('e_40')})
+    # print(soup)
+    links = soup.find_all('div', {'class': re.compile('e_4')})
     # print(*links, sep='\n')
 
     testList = []
@@ -79,6 +79,18 @@ def allScrap():
                             pass
                         elif 'https://lato.sx' in link:
                             pass
+                        elif 'https://brolel.net' in link:
+                            pass
+                        elif 'https://fifaworldcup.icu' in link:
+                            pass
+                        elif 'https://streamhd247.online' in link:
+                            pass
+                        elif 'https://worldstreams.click' in link:
+                            pass
+                        elif 'https://wizospor.monster' in link:
+                            pass
+                        elif 'https://ustream.pro' in link:
+                            pass
                         else:
                             ln = link.replace(
                                 "javascript:void(window.open('https://cdn.stream-24.net/live/stream.php?t=Flash&link=",
@@ -110,4 +122,4 @@ def allScrap():
 
 
 # allScrap()
-# print(*allScrap(), sep='\n')
+print(*allScrap(), sep='\n')
