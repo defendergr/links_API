@@ -18,7 +18,7 @@ def allScrap():
     service = Service(GeckoDriverManager().install())
     driver = webdriver.Firefox(service=service, options=options)
 
-    driver.get(url='https://widget.streamsthunder.tv/?d=1&s=1&sp=1&ft=01&fs=16px&fw=700&tt=none&fc=333333&tc=333333&bc=E5E4E2&bhc=E5E4E2&thc=333333&pd=18px&br=1px&brc=434342&brr=15px&mr=1px&tm=333333&tmb=FFFFFF&wb=E5E4E2&bcc=E5E4E2&bsh=0px&sm=2&rdb=EBEBEB&rdc=333333&lk=1&fk=0')
+    driver.get(url='https://widget.streamsthunder.tv/?d=1&s=1&sp=1,2&fs=12px&tt=none&fc=333333&tc=333333&bc=FFFFFF&bhc=F3F3F3&thc=333333&pd=5px&brc=CCCCCC&brr=2px&mr=1px&tm=333333&tmb=FFFFFF&wb=EBEBEB&bcc=FFFFFF&bsh=0px&sm=1&rdb=EBEBEB&rdc=333333&lk=1&fk=0')
     ele = driver.find_elements(By.TAG_NAME, 'h2')
     for acord in range(0, len(ele)):
         if ele[acord].is_displayed():
@@ -57,7 +57,10 @@ def allScrap():
                 try:
                     # print(i['fixture'][0])
                     text = i['fixture'][0]
-                    fixture = text.replace('Free Live Streaming Football', '').strip().split('/')[0]
+                    if 'Free Live Streaming Football' in text:
+                        fixture = text.replace('Free Live Streaming Football', '').strip().split('/')[0]
+                    if 'Free Live Streaming Basketball' in text:
+                        fixture = text.replace('Free Live Streaming Basketball', '').strip().split('/')[0]
                     matchLinks = list(i['links'])
                     singleMatchLinks = []
                     for link in matchLinks:
