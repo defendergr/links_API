@@ -1,4 +1,5 @@
 import re
+from thefuzz import fuzz, process
 from bs4 import BeautifulSoup
 from googletrans import Translator
 from selenium import webdriver
@@ -63,7 +64,30 @@ def allScrap():
                         fixture = text.replace('Free Live Streaming Basketball', '').strip().split('/')[0]
                     matchLinks = list(i['links'])
                     singleMatchLinks = []
+                    skipLinks = ['https://sport-play.live',
+                                 'http://www.sports-stream.site',
+                                 'https://spo-play.live',
+                                 'acestream://',
+                                 'https://varplatform.top',
+                                 'https://daddylivehd.com',
+                                 'https://lato.sx',
+                                 'https://brolel.net',
+                                 'https://fifaworldcup.icu',
+                                 'https://streamhd247.online',
+                                 'https://worldstreams.click',
+                                 'https://wizospor.monster',
+                                 'https://ustream.pro',
+                                 ]
                     for link in matchLinks:
+                        ln = link.replace(
+                            "javascript:void(window.open('https://cdn.stream-24.net/live/stream.php?t=Flash&link=",
+                            '').split(',')[0]
+                        if ln[:2] == '//':
+                            ln = 'https:' + ln
+
+                        rmid = re.sub(r'\&id=.*$', '', ln)
+
+                        finalLink = rmid.replace('\n', '')
 
                         if 'https://sport-play.live' in link:
                             pass
@@ -92,17 +116,8 @@ def allScrap():
                         elif 'https://ustream.pro' in link:
                             pass
                         else:
-                            ln = link.replace(
-                                "javascript:void(window.open('https://cdn.stream-24.net/live/stream.php?t=Flash&link=",
-                                '').split(',')[0]
-                            if ln[:2] == '//':
-                                ln = 'https:' + ln
-
-                            rmid = re.sub(r'\&id=.*$', '', ln)
-
-                            finalLink = rmid.replace('\n', '')
                             singleMatchLinks.append(finalLink)
-                            # print(finalLink)
+
                     commaSepList = ',\n'.join(singleMatchLinks)
                     match['Match'] = fixture
                     match['Link'] = commaSepList
