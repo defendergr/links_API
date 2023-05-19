@@ -60,24 +60,26 @@ def allScrap():
                     text = i['fixture'][0]
                     if 'Free Live Streaming Football' in text:
                         fixture = text.replace('Free Live Streaming Football', '').strip().split('/')[0]
-                    if 'Free Live Streaming Basketball' in text:
+                    elif 'Free Live Streaming Basketball' in text:
                         fixture = text.replace('Free Live Streaming Basketball', '').strip().split('/')[0]
+                    else:
+                        continue
                     matchLinks = list(i['links'])
                     singleMatchLinks = []
-                    skipLinks = ['https://sport-play.live',
-                                 'http://www.sports-stream.site',
-                                 'https://spo-play.live',
-                                 'acestream://',
-                                 'https://varplatform.top',
-                                 'https://daddylivehd.com',
-                                 'https://lato.sx',
-                                 'https://brolel.net',
-                                 'https://fifaworldcup.icu',
-                                 'https://streamhd247.online',
-                                 'https://worldstreams.click',
-                                 'https://wizospor.monster',
-                                 'https://ustream.pro',
-                                 ]
+                    # skipLinks = ['https://sport-play.live',
+                    #              'http://www.sports-stream.site',
+                    #              'https://spo-play.live',
+                    #              'acestream://',
+                    #              'https://varplatform.top',
+                    #              'https://daddylivehd.com',
+                    #              'https://lato.sx',
+                    #              'https://brolel.net',
+                    #              'https://fifaworldcup.icu',
+                    #              'https://streamhd247.online',
+                    #              'https://worldstreams.click',
+                    #              'https://wizospor.monster',
+                    #              'https://ustream.pro',
+                    #              ]
                     for link in matchLinks:
                         ln = link.replace(
                             "javascript:void(window.open('https://cdn.stream-24.net/live/stream.php?t=Flash&link=",
@@ -126,7 +128,6 @@ def allScrap():
                     else:
                         match.clear()
                     # print(fixture)
-
                 except:
                     pass
 
