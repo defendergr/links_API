@@ -1,4 +1,5 @@
 import re
+from thefuzz import fuzz, process
 from bs4 import BeautifulSoup
 from googletrans import Translator
 from selenium import webdriver
@@ -26,7 +27,7 @@ def allScrap():
 
     soup = BeautifulSoup(driver.page_source, 'html.parser')
     # print(soup)
-    links = soup.find_all('div', {'class': re.compile('e_4')})
+    links = soup.find_all('div', {'class': re.compile('e_')})
     # print(*links, sep='\n')
 
     testList = []
@@ -59,50 +60,73 @@ def allScrap():
                     text = i['fixture'][0]
                     if 'Free Live Streaming Football' in text:
                         fixture = text.replace('Free Live Streaming Football', '').strip().split('/')[0]
-                    if 'Free Live Streaming Basketball' in text:
+                    elif 'Free Live Streaming Basketball' in text:
                         fixture = text.replace('Free Live Streaming Basketball', '').strip().split('/')[0]
+                    else:
+                        continue
                     matchLinks = list(i['links'])
                     singleMatchLinks = []
+                    # skipLinks = ['https://sport-play.live',
+                    #              'http://www.sports-stream.site',
+                    #              'https://spo-play.live',
+                    #              'acestream://',
+                    #              'https://varplatform.top',
+                    #              'https://daddylivehd.com',
+                    #              'https://lato.sx',
+                    #              'https://brolel.net',
+                    #              'https://fifaworldcup.icu',
+                    #              'https://streamhd247.online',
+                    #              'https://worldstreams.click',
+                    #              'https://wizospor.monster',
+                    #              'https://ustream.pro',
+                    #              ]
                     for link in matchLinks:
+                        # print(link)
+                        ln = link.replace(
+                            # "javascript:void(window.open('https://cdn.stream-24.net/live/stream.php?t=Flash&link=", # OLD LINK
+                            "javascript:void(window.open('https://spo-play.live/live/?t=Flash&link=", # NEW LINK
+                            '').split(',')[0]
 
-                        if 'https://sport-play.live' in link:
+                        if ln[:2] == '//':
+                            ln = 'https:' + ln
+
+
+                        rmid = re.sub(r'\&id=.*$', '', ln)
+
+                        finalLink = rmid.replace('\n', '')
+                        # print(finalLink)
+
+                        if 'https://sport-play.live' in finalLink:
                             pass
-                        elif 'http://www.sports-stream.site' in link:
+                        elif 'http://www.sports-stream.site' in finalLink:
                             pass
-                        elif 'https://spo-play.live' in link:
+                        elif 'https://spo-play.live' in finalLink:
                             pass
-                        elif 'acestream://' in link:
+                        elif 'acestream://' in finalLink:
                             pass
-                        elif 'https://varplatform.top' in link:
+                        elif 'https://varplatform.top' in finalLink:
                             pass
-                        elif 'https://daddylivehd.com' in link:
+                        elif 'https://daddylivehd.com' in finalLink:
                             pass
-                        elif 'https://lato.sx' in link:
+                        elif 'https://lato.sx' in finalLink:
                             pass
-                        elif 'https://brolel.net' in link:
+                        elif 'https://brolel.net' in finalLink:
                             pass
-                        elif 'https://fifaworldcup.icu' in link:
+                        elif 'https://fifaworldcup.icu' in finalLink:
                             pass
-                        elif 'https://streamhd247.online' in link:
+                        elif 'https://streamhd247.online' in finalLink:
                             pass
-                        elif 'https://worldstreams.click' in link:
+                        elif 'https://worldstreams.click' in finalLink:
                             pass
-                        elif 'https://wizospor.monster' in link:
+                        elif 'https://wizospor.monster' in finalLink:
                             pass
-                        elif 'https://ustream.pro' in link:
+                        elif 'https://ustream.pro' in finalLink:
                             pass
                         else:
-                            ln = link.replace(
-                                "javascript:void(window.open('https://cdn.stream-24.net/live/stream.php?t=Flash&link=",
-                                '').split(',')[0]
-                            if ln[:2] == '//':
-                                ln = 'https:' + ln
-
-                            rmid = re.sub(r'\&id=.*$', '', ln)
-
-                            finalLink = rmid.replace('\n', '')
                             singleMatchLinks.append(finalLink)
-                            # print(finalLink)
+
+                        # print(singleMatchLinks)
+
                     commaSepList = ',\n'.join(singleMatchLinks)
                     match['Match'] = fixture
                     match['Link'] = commaSepList
@@ -111,7 +135,6 @@ def allScrap():
                     else:
                         match.clear()
                     # print(fixture)
-
                 except:
                     pass
 
