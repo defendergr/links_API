@@ -122,6 +122,8 @@ def allScrap():
                             pass
                         elif 'https://ustream.pro' in finalLink:
                             pass
+                        elif 'https://emb.apl' in finalLink:
+                            pass
                         else:
                             singleMatchLinks.append(finalLink)
 
@@ -145,4 +147,4 @@ def allScrap():
 
 
 # allScrap()
-print(*allScrap(), sep='\n')
+# print(*allScrap(), sep='\n')
