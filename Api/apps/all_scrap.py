@@ -98,7 +98,7 @@ def allScrap():
 
                         if 'https://sport-play.live' in finalLink:
                             pass
-                        elif 'http://www.sports-stream.site' in finalLink:
+                        elif 'http://www.sports-stream' in finalLink:
                             pass
                         elif 'https://spo-play.live' in finalLink:
                             pass
