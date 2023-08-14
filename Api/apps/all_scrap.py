@@ -124,6 +124,10 @@ def allScrap():
                             pass
                         elif 'https://emb.apl' in finalLink:
                             pass
+                        elif 'https://var90.top' in finalLink:
+                            pass
+                        elif 'https://soccerstream100.co' in finalLink:
+                            pass
                         else:
                             singleMatchLinks.append(finalLink)
 
