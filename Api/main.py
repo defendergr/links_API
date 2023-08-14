@@ -22,7 +22,7 @@ def get_weather():
     url = "https://forecast9.p.rapidapi.com"
 
     headers = {
-        "X-RapidAPI-Key": "506f107e78msh86a543ca39c5334p1f38bajsn467ff9a7f3af",
+        "X-RapidAPI-Key": API_KEY,
         "X-RapidAPI-Host": "forecast9.p.rapidapi.com"
     }
 
