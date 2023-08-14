@@ -2,3 +2,4 @@ venv
 .idea
 geckodriver.log
 apps/geckodriver.log
+Api/env.py

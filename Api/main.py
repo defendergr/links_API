@@ -1,5 +1,6 @@
 from Api import app
 from Api.apps import allScrap
+from Api.env import *
 import requests
 import orjson
 from geopy.geocoders import Nominatim
@@ -22,7 +23,7 @@ def get_weather():
     url = "https://forecast9.p.rapidapi.com"
 
     headers = {
-        "X-RapidAPI-Key": API_KEY,
+        "X-RapidAPI-Key": weather_api(),
         "X-RapidAPI-Host": "forecast9.p.rapidapi.com"
     }
 
