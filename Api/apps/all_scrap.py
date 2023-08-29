@@ -19,7 +19,7 @@ def allScrap():
     if os.name == 'nt':
         service = Service(GeckoDriverManager().install())
     elif os.name == 'posix':
-        service = Service(executable_path='/data/data/com.termux/files/usr/bin/geckodriver')
+        service = Service(executable_path='/usr/bin/geckodriver')
     driver = webdriver.Firefox(service=service, options=options)
 
     driver.get(url='https://widget.streamsthunder.tv/?d=1&s=1&sp=1,2&fs=12px&tt=none&fc=333333&tc=333333&bc=FFFFFF&bhc=F3F3F3&thc=333333&pd=5px&brc=CCCCCC&brr=2px&mr=1px&tm=333333&tmb=FFFFFF&wb=EBEBEB&bcc=FFFFFF&bsh=0px&sm=1&rdb=EBEBEB&rdc=333333&lk=1&fk=0%22%20width=%22100%%22%20height=%22800%22%20scrolling=%22auto%22%20align=%22top%22%20frameborder=%220%22')
