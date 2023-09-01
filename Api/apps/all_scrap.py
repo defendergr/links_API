@@ -19,9 +19,9 @@ def allScrap():
     if os.name == 'nt':
         service = Service(GeckoDriverManager().install())
     elif os.name == 'posix':
-        try:
+        if os.path.isfile('/usr/bin/geckodriver'):
             service = Service(executable_path='/usr/bin/geckodriver')
-        except FileNotFoundError:
+        else:
             service = Service(executable_path='/data/data/com.termux/files/usr/bin/geckodriver')
     driver = webdriver.Firefox(service=service, options=options)
 
