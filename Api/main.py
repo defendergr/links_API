@@ -2,9 +2,9 @@ from Api import app
 from Api.apps import allScrap
 from Api.env import *
 import requests
-import orjson
+
 from geopy.geocoders import Nominatim
-from fastapi.responses import JSONResponse, ORJSONResponse
+from fastapi.responses import JSONResponse
 from datetime import datetime
 
 
