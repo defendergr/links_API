@@ -1,6 +1,6 @@
 from Api import app
 from Api.apps import allScrap
-from Api.env import *
+# from Api.env import *
 import requests
 
 from geopy.geocoders import Nominatim
