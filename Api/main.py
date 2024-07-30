@@ -1,5 +1,7 @@
+from fastapi.encoders import jsonable_encoder
+
 from Api import app
-from Api.apps import allScrap
+from Api.apps import games
 # from Api.env import *
 import requests
 
@@ -15,8 +17,8 @@ def home():
 
 @app.get('/links')
 def get_links():
-    gameList = allScrap()
-    return gameList
+    data = jsonable_encoder(games('dict'))
+    return JSONResponse(data)
 
 @app.get('/football')
 def get_football():

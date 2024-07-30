@@ -1,5 +1,7 @@
+import json
 import re
-from thefuzz import fuzz, process
+from datetime import datetime, timedelta
+
 from bs4 import BeautifulSoup
 from googletrans import Translator
 from selenium import webdriver
@@ -11,8 +13,14 @@ import os
 translator = Translator()
 
 
-def allScrap():
-    matches = []
+def get_data():
+    '''
+    Extracts elements from the HTML content of the page.
+    Args:
+        None
+    Returns:
+        list: List of elements extracted from the HTML content.
+    '''
 
     options = Options()
     options.add_argument('--headless')
@@ -25,136 +33,200 @@ def allScrap():
             service = Service(executable_path='/data/data/com.termux/files/usr/bin/geckodriver')
     driver = webdriver.Firefox(service=service, options=options)
 
-    driver.get(url='https://widget.streamsthunder.tv/?d=1&s=1&sp=1,2&fs=12px&tt=none&fc=333333&tc=333333&bc=FFFFFF&bhc=F3F3F3&thc=333333&pd=5px&brc=CCCCCC&brr=2px&mr=1px&tm=333333&tmb=FFFFFF&wb=EBEBEB&bcc=FFFFFF&bsh=0px&sm=1&rdb=EBEBEB&rdc=333333&lk=1&fk=0%22%20width=%22100%%22%20height=%22800%22%20scrolling=%22auto%22%20align=%22top%22%20frameborder=%220%22')
+    driver.get(url='https://widget.streamsthunder.tv/?d=1&s=1&sp=1,2&ft=01&fs=16px&fw=700&tt=none&fc=333333&tc=333333&bc=E5E4E2&bhc=E5E4E2&thc=333333&pd=18px&br=1px&brc=434342&brr=15px&mr=1px&tm=333333&tmb=FFFFFF&wb=E5E4E2&bcc=E5E4E2&bsh=0px&sm=2&rdb=EBEBEB&rdc=333333&lk=1&fk=0')
     ele = driver.find_elements(By.TAG_NAME, 'h2')
     for acord in range(0, len(ele)):
         if ele[acord].is_displayed():
             ele[acord].click()
+    scraped = driver.page_source
+    driver.close()
+    return scraped
 
-    soup = BeautifulSoup(driver.page_source, 'html.parser')
-    # print(soup)
-    links = soup.find_all('div', {'class': re.compile('e_')})
-    # print(*links, sep='\n')
+def get_elements():
+    '''
+    Fetches data from a custom selenium server, extracts specific elements from the data using BeautifulSoup,
+    and returns a list of titles and links related to games found on that data.
+    Returns:
+        tuple: Tuple containing lists of game titles and links.
+    '''
+    # Get data from the URL
+    data = get_data()
 
-    testList = []
-    # testList += ''.join(testList)
+    # Parse the the data as HTML content
+    soup = BeautifulSoup(data, 'html.parser')
 
-    for item in links:
-        # print(item.text)
-        game = []
-        links = []
-        if 'Free Live' in item.text:
-            game.append(item.text)
+    # Find the main div containing the elements
+    elements = soup.find('div', {'class': re.compile('accordion')})
 
-        if 'Flash' in item.text:
-            for link in item.find_all('a'):
-                links.append(link['href'])
-        # print(game)
-        # print(links)
-        tupList = {'fixture':game, 'links': tuple(links)}
-        testList.append(tupList)
-    # print(*testList, sep='\n')
+    # Find all game titles and links
+    games_titles = elements.find_all('h2', {'ui-accordion-header': ''})
+    games_links = elements.find_all('div', {'ui-widget-content': ''})
 
-    for i in testList:
+    return games_titles, games_links
+
+
+def get_games():
+    '''
+    Extracts information about sports matches from the data elements obtained by get_elements.
+    Iterates through the elements, extracts details like timestamp, sport, country, and fixture
+    based on specific conditions, and adds them to a list of matches.
+    Returns:
+        list: List of extracted match details.
+    '''
+    # Get titles and links from get_elements function
+    titles, links = get_elements()
+    matches = []
+
+    # Iterate through titles to extract match details
+    for item in (x.find_all('div') for x in titles):
         match = {}
-        # print(len(i['fixture'][0]))
         try:
-            # print(len(i['links']))
-            if len(i['fixture'][0]) > 0 and len(i['links']) > 0:
-                try:
-                    # print(i['fixture'][0])
-                    text = i['fixture'][0]
-                    if 'Free Live Streaming Football' in text:
-                        fixture = text.replace('Free Live Streaming Football', '').strip().split('/')[0]
-                    elif 'Free Live Streaming Basketball' in text:
-                        fixture = text.replace('Free Live Streaming Basketball', '').strip().split('/')[0]
-                    else:
-                        continue
-                    matchLinks = list(i['links'])
-                    singleMatchLinks = []
-                    # skipLinks = ['https://sport-play.live',
-                    #              'http://www.sports-stream.site',
-                    #              'https://spo-play.live',
-                    #              'acestream://',
-                    #              'https://varplatform.top',
-                    #              'https://daddylivehd.com',
-                    #              'https://lato.sx',
-                    #              'https://brolel.net',
-                    #              'https://fifaworldcup.icu',
-                    #              'https://streamhd247.online',
-                    #              'https://worldstreams.click',
-                    #              'https://wizospor.monster',
-                    #              'https://ustream.pro',
-                    #              ]
-                    for link in matchLinks:
-                        # print(link)
-                        ln = link.replace(
-                            # "javascript:void(window.open('https://cdn.stream-24.net/live/stream.php?t=Flash&link=", # OLD LINK
-                            "javascript:void(window.open('https://spo-play.live/live/?t=Flash&link=", # NEW LINK
-                            '').split(',')[0]
+            # Extract timestamp and add 2 hours
+            if 'original_time' in str(item[0]):
+                match["timestamp"] = item[0].text
+                match["time"] = datetime.fromtimestamp(int(item[0].text)) + timedelta(hours=2)
 
-                        if ln[:2] == '//':
-                            ln = 'https:' + ln
+            # Extract sport
+            if 'sport' in str(item[1]):
+                if 'basketball' in str(item[1]):
+                    match["sport"] = "Basketball"
+                elif 'football' in str(item[1]):
+                    match["sport"] = "Football"
+                else:
+                    match["sport"] = str(item[1].span)
 
+            # Extract country
+            if 'country' in str(item[3]):
+                if 'countries/' in str(item[3]):
+                    n = str(item[3].span).find("countries/")
+                elif 'competition/' in str(item[3]):
+                    n = str(item[3].span).find("competition/") + 2
+                match["country"] = str(item[3].span)[n + 10:].removesuffix(r'.png);"></span>')
 
-                        rmid = re.sub(r'\&id=.*$', '', ln)
+            # Extract fixture
+            if 'match' in str(item[4]):
+                match["fixture"] = item[4].text.replace(' -   ', ' - ')
 
-                        finalLink = rmid.replace('\n', '')
-                        # print(finalLink)
+            # Initialize links
+            match["links"] = ''
 
-                        if 'https://sport-play.live' in finalLink:
-                            pass
-                        elif 'http://www.sports-stream' in finalLink:
-                            pass
-                        elif 'https://spo-play.live' in finalLink:
-                            pass
-                        elif 'acestream://' in finalLink:
-                            pass
-                        elif 'https://varplatform.top' in finalLink:
-                            pass
-                        elif 'https://daddylivehd.com' in finalLink:
-                            pass
-                        elif 'https://lato.sx' in finalLink:
-                            pass
-                        elif 'https://brolel.net' in finalLink:
-                            pass
-                        elif 'https://fifaworldcup.icu' in finalLink:
-                            pass
-                        elif 'https://streamhd247.online' in finalLink:
-                            pass
-                        elif 'https://worldstreams.click' in finalLink:
-                            pass
-                        elif 'https://wizospor.monster' in finalLink:
-                            pass
-                        elif 'https://ustream.pro' in finalLink:
-                            pass
-                        elif 'https://emb.apl' in finalLink:
-                            pass
-                        elif 'https://var90.top' in finalLink:
-                            pass
-                        elif 'https://soccerstream100.co' in finalLink:
-                            pass
-                        else:
-                            singleMatchLinks.append(finalLink)
+            # Check if fixture already exists in matches, then add match
+            if match['fixture'] not in [x['fixture'] for x in matches]:
+                matches.append(match)
 
-                        # print(singleMatchLinks)
+        except Exception as e:
+            print(e)
 
-                    commaSepList = ',\n'.join(singleMatchLinks)
-                    match['Match'] = fixture
-                    match['Link'] = commaSepList
-                    if len(singleMatchLinks) > 0:
-                        matches.append(match)
-                    else:
-                        match.clear()
-                    # print(fixture)
-                except:
-                    pass
-
-        except IndexError:
-            pass
-    driver.quit()
     return matches
 
 
-# allScrap()
-# print(*allScrap(), sep='\n')
+def get_links():
+    '''
+    Extracts links for specific fixtures from data.
+    Args:
+        None
+    Returns:
+        list: List of matches containing fixture information and links that meet certain conditions.
+    '''
+
+    # Get titles and links from get_elements function
+    titles, links = get_elements()
+
+    matches = []
+
+    for link in links:
+        match = {}
+        links = ''
+
+        # Extract fixture information
+        if link.findAll('p'):
+            # Remove prefixes from fixture text
+            fixture = link.findAll('p')[0].text.strip().removeprefix('Free Live Streaming Basketball').removeprefix('Free Live Streaming Football')
+            match['fixture'] = fixture.split(' / ')[0].strip().replace(' -   ', ' - ')
+
+        # Extract links with "flash" string
+        for link in link.findAll('a'):
+            link = link['href'].split("','")[0].replace('\n', '')
+            if "flash" in str(link).lower():
+                # print(link['href'], '\n')
+                n = str(link).find("link=")
+                pattern = r'btn-default=.*'
+                # Process and format the links
+                link = re.sub(pattern, '', str(link)[n + 5:]).strip().split('&')[0]
+                if link.startswith('//'):
+                    link = 'https:' + link
+                if link.startswith('http'):
+                    links += link + ","
+
+        match['links'] = links.removesuffix(',')
+
+        # Check conditions before adding to matches
+        if 'fixture' in match.keys() and len(match['links']) > 1:
+            matches.append(match)
+
+    return matches
+
+
+def add_links():
+    '''
+    This function matches links to games based on fixture equality
+    and appends the links to the respective games.
+    Then removes any trailing commas from the links and returns the updated list of matches.
+
+    Returns:
+        list: List of matches with appended links.
+    '''
+    # Get matches and links
+    matches = get_games()
+    links = get_links()
+
+    # Add links to matches
+    for match in matches:
+        for link in links:
+            if match['fixture'].strip() == link['fixture'].strip():
+                match['links'] += link['links'] + ","
+
+        # Remove trailing commas
+        match['links'] = match['links'].removesuffix(',,')
+
+    return matches
+
+
+def games(args=None):
+    '''
+    This function defines a game processing mechanism based on the provided arguments.
+
+    Args:
+        args: The argument to specify the action. Default is None.
+
+    Returns:
+        str or dict: Returns different outputs based on the argument:
+            - If args is None, a message to use the argument 'help'.
+            - If args is 'help', instructions on how to use different arguments.
+            - If args is 'json', the matches with links in JSON format.
+            - If args is 'dict', the matches with links as a dictionary.
+    '''
+    accepted_args = ['json', 'dict', 'help']
+    if args == None or args not in accepted_args:
+        return "\tUse argument 'help' for more info."
+    elif args == 'help':
+        return "\tUse argument 'json' to get json format. \n\tUse argument 'dict' to get dictionary format. \n\tUse argument 'save' to save data in database."
+    try:
+        # Get matches with links
+        matches = add_links()
+        matches_with_links = []
+        for match in matches:
+            if len(match['links']) > 0:
+                matches_with_links.append(match)
+
+        if args == 'json':
+            return json.dumps(matches_with_links, indent=4, default=str)
+        elif args == 'dict':
+            return matches_with_links
+
+    except Exception as e:
+        return str(e)
+
+
+# print(games('json'))
+# print(*get_links(), sep='\n')
