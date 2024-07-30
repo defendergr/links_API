@@ -35,7 +35,7 @@ def get_football():
     response = requests.get(url, headers=headers, params=querystring)
     json_data = response.json()
     all_matches_data = []
-    tournaments = ["Serie A", "LaLiga", "premier-league"] #TODO pull from db
+    tournaments = ["Serie A", "LaLiga", "Ligue 1", "Bundesliga", "Premier League"] #TODO pull from db
 
     for key in (json_data["data"]):
         match_data = {}
