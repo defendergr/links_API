@@ -12,7 +12,7 @@ from datetime import datetime
 
 @app.get('/')
 def home():
-    text = 'sport links, search machine API v1.1.2 By Defender'
+    text = 'sport links, search machine API v1 By Defender'
     return text
 
 @app.get('/links')
