@@ -2,7 +2,7 @@ from fastapi.encoders import jsonable_encoder
 
 from Api import app
 from Api.apps import games
-# from Api.env import *
+from Api.env import *
 import requests
 
 from geopy.geocoders import Nominatim
@@ -28,7 +28,7 @@ def get_football():
     querystring = {"sport_id": "1", "date": today}
 
     headers = {
-        "X-RapidAPI-Key": "506f107e78msh86a543ca39c5334p1f38bajsn467ff9a7f3af",
+        "X-RapidAPI-Key": SOFA_API_KEY,
         "X-RapidAPI-Host": "sofascores.p.rapidapi.com"
     }
 
