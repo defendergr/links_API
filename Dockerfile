@@ -8,4 +8,5 @@ RUN set -x \
     && apt install -y firefox-esr \
     && pip install --no-cache-dir --upgrade -r /app/requirement.txt
 COPY . /app
+EXPOSE 80
 CMD ["uvicorn", "Api.main:app", "--port", "80", "--host", "0.0.0.0"]
