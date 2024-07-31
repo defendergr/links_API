@@ -16,14 +16,19 @@ translator = Translator()
 def get_data():
     '''
     Extracts elements from the HTML content of the page.
+
     Args:
         None
+
     Returns:
-        list: List of elements extracted from the HTML content.
+        str: The HTML content of the page.
     '''
 
+    # Create options for headless mode
     options = Options()
     options.add_argument('--headless')
+
+    # Set the driver path based on the operating system
     if os.name == 'nt':
         service = Service(GeckoDriverManager().install())
     elif os.name == 'posix':
@@ -31,15 +36,25 @@ def get_data():
             service = Service(executable_path='/usr/bin/geckodriver')
         else:
             service = Service(executable_path='/data/data/com.termux/files/usr/bin/geckodriver')
+
+    # Create the webdriver instance
     driver = webdriver.Firefox(service=service, options=options)
 
+    # Navigate to the specified URL
     driver.get(url='https://widget.streamsthunder.tv/?d=1&s=1&sp=1,2&ft=01&fs=16px&fw=700&tt=none&fc=333333&tc=333333&bc=E5E4E2&bhc=E5E4E2&thc=333333&pd=18px&br=1px&brc=434342&brr=15px&mr=1px&tm=333333&tmb=FFFFFF&wb=E5E4E2&bcc=E5E4E2&bsh=0px&sm=2&rdb=EBEBEB&rdc=333333&lk=1&fk=0')
+
+    # Find all elements with the tag name 'h2'
     ele = driver.find_elements(By.TAG_NAME, 'h2')
+
+    # Click on each displayed element
     for acord in range(0, len(ele)):
         if ele[acord].is_displayed():
             ele[acord].click()
+
+    # Get the page source and close the driver
     scraped = driver.page_source
     driver.close()
+
     return scraped
 
 def get_elements():

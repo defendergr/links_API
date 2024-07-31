@@ -1,6 +1,7 @@
 .idea
 venv
 geckodriver.log
-win-run.cmd
 .git
-DockerImageBuild.cmd
+oldCMD's
+*.cmd
+*.yaml
