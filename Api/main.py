@@ -1,14 +1,17 @@
 from fastapi.encoders import jsonable_encoder
-
 from Api import app
 from Api.apps import games
-from Api.env import *
+import os
 import requests
-
 from geopy.geocoders import Nominatim
 from fastapi.responses import JSONResponse
 from datetime import datetime
 
+if os.path.isfile('Api\env.py'):
+    from Api.env import *
+else:
+    with open('Api\env.py', 'w') as f: f.write("SOFA_API_KEY = ''")
+    from Api.env import *
 
 @app.get('/')
 def home():
@@ -22,6 +25,9 @@ def get_links():
 
 @app.get('/football')
 def get_football():
+    if SOFA_API_KEY == '':
+        return JSONResponse([{"error":"Sofa Scores API key not found", "solution":"Please set SOFA_API_KEY in env.py"}])
+
     url = "https://sofascores.p.rapidapi.com/v1/events/schedule/date"
     today = datetime.today().strftime("%Y-%m-%d")
 
