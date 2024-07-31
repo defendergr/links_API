@@ -1,8 +1,7 @@
+__pycache__/
 venv
 .idea
 geckodriver.log
 apps/geckodriver.log
 Api/env.py
-Api/__pycache__/*.*
-Api/apps/__pycache__/*.*
 README.md
