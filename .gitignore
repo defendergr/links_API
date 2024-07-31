@@ -1,4 +1,5 @@
-__pycache__/
+Api/__pycache__/
+Api/apps/__pycache__/
 venv
 .idea
 geckodriver.log
