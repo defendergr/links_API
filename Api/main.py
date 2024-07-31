@@ -29,7 +29,7 @@ def home():
         Returns:
             str: The text message.
         """
-    text = 'sport links, search machine API v1 By Defender'
+    text = 'sport info API v1 By Defender'
     return text
 
 
