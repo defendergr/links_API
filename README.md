@@ -24,7 +24,7 @@
 
 ##  Quick Links
 
-> - [ Overview](#-overview)
+> - [ Overview](#overview)
 > - [ Features](#-features)
 > - [ Repository Structure](#-repository-structure)
 > - [ Getting Started](#-getting-started)
