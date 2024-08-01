@@ -5,4 +5,7 @@ venv
 geckodriver.log
 apps/geckodriver.log
 Api/env.py
-README.md
+gitOnlyGet.cmd
+gitSave.cmd
+run.py
+oldCMD's/win-run.cmd
