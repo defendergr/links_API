@@ -140,9 +140,7 @@ Run the application:
 Connect to :
 
 ```sh
-> http://localhost:8030/
-> http://localhost:8030/links
-> http://localhost:8030/football
+> http://localhost:8030/docs
 ```
 
 ---
