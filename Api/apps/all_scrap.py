@@ -1,16 +1,14 @@
 import json
 import re
 from datetime import datetime, timedelta
-
 from bs4 import BeautifulSoup
-from googletrans import Translator
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.firefox.service import Service
 import os
-translator = Translator()
+
 
 
 def get_data():
