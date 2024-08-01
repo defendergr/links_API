@@ -30,9 +30,7 @@
 > - [ Getting Started](#-getting-started)
 >   - [ Installation](#-installation)
 >   - [ Running links_API](#-running-links_API)
-> - [ Project Roadmap](#-project-roadmap)
 > - [ License](#-license)
-> - [ Acknowledgments](#-acknowledgments)
 
 ---
 
