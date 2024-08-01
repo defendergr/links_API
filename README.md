@@ -96,22 +96,32 @@ Ensure you have the following dependencies installed on your system:
 1. Clone the links_API repository:
 
 ```sh
-git clone https://github.com/defendergr/links_API.git
+> git clone https://github.com/defendergr/links_API.git
 ```
 
 2. Change to the project directory:
 
 ```sh
-cd links_API
+> cd links_API
 ```
 
-3. Build Docker image:
+3. (optional) Navigate and signIn to rapidapi to get token:
+
+```sh
+https://rapidapi.com/rapidsportapi/api/sportapi7/playground/
+```
+4. (optional) Run `WinSetToken.cmd` will prompt you to paste your SofaScores API token without quotation marks:
+```sh
+> WinSetToken.cmd
+```
+
+5. Build Docker image:
 
 ```sh
 > DockerImageBuild.cmd
 ```
 
-4. Create pod's:
+6. Create pod's:
 
 ```sh
 > K8sCreate.cmd
