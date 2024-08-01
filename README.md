@@ -25,12 +25,12 @@
 ##  Quick Links
 
 > - [ Overview](#overview)
-> - [ Features](#-features)
-> - [ Repository Structure](#-repository-structure)
-> - [ Getting Started](#-getting-started)
->   - [ Installation](#-installation)
->   - [ Running links_API](#-running-links_API)
-> - [ License](#-license)
+> - [ Features](#features)
+> - [ Repository Structure](#repository-structure)
+> - [ Getting Started](#getting-started)
+>   - [ Installation](#installation)
+>   - [ Running links_API](#running-links_API)
+> - [ License](#license)
 
 ---
 
