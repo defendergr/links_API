@@ -105,7 +105,7 @@ Ensure you have the following dependencies installed on your system:
 > cd links_API
 ```
 
-3. (optional) Navigate and signIn to rapidapi to get token:
+3. (optional) Navigate and sign up to rapidapi to get token:
 
 ```sh
 https://rapidapi.com/rapidsportapi/api/sportapi7/playground/
