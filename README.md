@@ -66,19 +66,15 @@ This Python application is designed to extract and process sports match data. Ke
     │   │   ├── __init__.py
     │   │   └── all_scrap.py
     │   └── main.py
+    ├── oldCMDs
+    │   ├── DockerContainerBuild.cmd    
     ├── DockerImageBuild.cmd
     ├── Dockerfile
     ├── K8sCreate.cmd
     ├── K8sRun.cmd
     ├── LICENSE
     ├── deployment.yaml
-    ├── gitOnlyGet.cmd
-    ├── gitSave.cmd
-    ├── oldCMDs
-    │   ├── DockerContainerBuild.cmd
-    │   └── win-run.cmd
-    ├── requirement.txt
-    └── run.py
+    └── requirement.txt
 ```
 
 ---
