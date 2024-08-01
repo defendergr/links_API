@@ -127,6 +127,16 @@ Run the application:
 
 ---
 
+Connect to :
+
+```sh
+> http://localhost:8030/
+> http://localhost:8030/links
+> http://localhost:8030/football
+```
+
+---
+
 ##  License
 
 This project is protected under the [AGPL-3.0 license](LICENSE) License.
