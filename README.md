@@ -39,7 +39,7 @@
 This web application is a FastAPI-based API service designed to retrieve and process sports match data.
 
 - **Football Match Data:** The `/football` endpoint fetches real-time football match data from the SofaScores API. It requires a valid `SOFA_API_KEY` and filters results based on specified tournaments.
-- **Data Extraction:** The `/links` endpoint accesses an internal Python application responsible for web scraping and data extraction from a designated URL.
+- **Data Extraction:** The `/links`  endpoint accesses an internal Python application responsible for web scraping and data extraction from a designated URL. This URL presents significant challenges due to its complex structure and dynamic content.
 - **Infrastructure:** Includes pre-configured command files for building Docker images and Kubernetes pods to streamline continuous integration and delivery (CI/CD) processes.
 - This application showcases proficiency in Python, FastAPI, web scraping, API integration, and containerization technologies.
 ---
@@ -67,7 +67,7 @@ This Python application is designed to extract and process sports match data. Ke
     │   │   └── all_scrap.py
     │   └── main.py
     ├── oldCMDs
-    │   ├── DockerContainerBuild.cmd    
+    │   └── DockerContainerBuild.cmd    
     ├── DockerImageBuild.cmd
     ├── Dockerfile
     ├── K8sCreate.cmd
