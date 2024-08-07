@@ -43,7 +43,6 @@ def get_links():
     """
     # Convert the games data to a JSON-serializable format
     data = jsonable_encoder(games('dict'))
-    print(data)
 
     # Return the JSON response
     return JSONResponse(data)
