@@ -11,12 +11,12 @@ Load the environment variables from the 'Api\env.py' file if it exists,
 otherwise create the file with default values and load the environment variables.
 """
 # Check if the 'Api\env.py' file exists
-if os.path.isfile('env.py'):
+if os.path.isfile(os.path.join('Api/','env.py')):
     # If the file exists, import the environment variables
     from Api.env import *
 else:
     # If the file does not exist, create it with default values and import the environment variables
-    with open('env.py', 'w') as f:
+    with open(os.path.join('Api/','env.py'), 'w') as f:
         f.write("SOFA_API_KEY = ''")
     from Api.env import *
 
