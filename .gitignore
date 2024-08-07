@@ -9,3 +9,5 @@ gitOnlyGet.cmd
 gitSave.cmd
 run.py
 oldCMD's/win-run.cmd
+.pytest_cache
+env.py
