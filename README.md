@@ -31,6 +31,7 @@
 >   - [ Installation](#installation)
 >   - [ Running links_API](#running-links_API)
 > - [ License](#license)
+> - [ Tests](#Tests)
 
 ---
 
@@ -59,21 +60,25 @@ This Python application is designed to extract and process sports match data. Ke
 ##  Repository Structure
 
 ```sh
-└── links_API/
+└── links_API
     ├── Api
-    │   ├── __init__.py
-    │   ├── apps
-    │   │   ├── __init__.py
-    │   │   └── all_scrap.py
-    │   └── main.py
-    ├── oldCMDs
-    │   └── DockerContainerBuild.cmd    
+    │   ├── __init__.py
+    │   ├── apps
+    │   │   ├── __init__.py
+    │   │   ├── all_scrap.py
+    │   │   └── test_all_scrap.py
+    │   ├── main.py
+    │   └── test_main.py
     ├── DockerImageBuild.cmd
     ├── Dockerfile
     ├── K8sCreate.cmd
     ├── K8sRun.cmd
     ├── LICENSE
+    ├── README.md
+    ├── WinSetToken.cmd
     ├── deployment.yaml
+    ├── oldCMDs
+    │   └── DockerContainerBuild.cmd
     └── requirement.txt
 ```
 
@@ -139,6 +144,27 @@ Connect to :
 http://localhost:8030/docs
 ```
 
+---
+
+##  Tests
+
+Use command to view running pods
+
+```commandline
+kubectl get pods
+```
+
+Connect to pod :
+
+```commandline
+kubectl exec --stdin --tty <pod name> -- /bin/bash
+```
+
+Run command :
+
+```commandline
+pytest -vv
+```
 ---
 
 ##  License
