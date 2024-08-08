@@ -148,19 +148,7 @@ http://localhost:8030/docs
 
 ##  Tests
 
-Use command to view running pods
-
-```commandline
-kubectl get pods
-```
-
-Connect to pod :
-
-```commandline
-kubectl exec --stdin --tty <pod name> -- /bin/bash
-```
-
-Run command :
+Run command inside python environment :
 
 ```commandline
 pytest -vv
